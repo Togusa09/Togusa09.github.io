@@ -36,11 +36,11 @@ Readify portal for compiling and distributing weekly summaries. It provides trac
 
 The following are practices that I've found useful 
 
-	- Keep notes through the day: Having a record of what you did, issues encountered or discussions you had with people is invaluable. When switching clients it can be hard to remember the details of what you did that morning, let alone the previous day.
-	- Record Timesheets at end of day, or when switching customer: Timesheets can be a pain and easy to forget, especially when you just want to get home on a Friday. By making it a habit to fill them in every day, it's one less thing to remember, and you don't have to spend time going back through notes to check what you were doing Monday morning.
-	- Update Rediupdates at end of day. There is always a chance you won't be on the customer tomorrow. 
-	- At the start of the day, send the client list of items you plan to complete, and raise any issues that might hinder you
-	- Send updates through the day as you being or are blocked on tasks. Whenever you do something, think about who is interested in the task, and how it affects them. This can range between completing a task or encountering an obstruction through to making a production deployment.
-	- Send to client a summary of tasks completed at the end of the day: There will be some overlap between this and the rediupdates notes, but this summary is focused on answering any questions the client might have. This also serves as a reminder of any work you require the client to complete before your next work day.
-	- Update ticket notes with new information you encounter as you work on a task. This is also useful when someone else has to take over a partly completed work item.
-	- Link commits and branches to tickets: VSTS supports linking of branches and commits to a work item. This can add far more context to the changes that the commit messages do.
+* Keep notes through the day: Having a record of what you did, issues encountered or discussions you had with people is invaluable. When switching clients it can be hard to remember the details of what you did that morning, let alone the previous day.
+* Record Timesheets at end of day, or when switching customer: Timesheets can be a pain and easy to forget, especially when you just want to get home on a Friday. By making it a habit to fill them in every day, it's one less thing to remember, and you don't have to spend time going back through notes to check what you were doing Monday morning.
+* Update Rediupdates at end of day. There is always a chance you won't be on the customer tomorrow. 
+* At the start of the day, send the client list of items you plan to complete, and raise any issues that might hinder you
+* Send updates through the day as you being or are blocked on tasks. Whenever you do something, think about who is interested in the task, and how it affects them. This can range between completing a task or encountering an obstruction through to making a production deployment.
+* Send to client a summary of tasks completed at the end of the day: There will be some overlap between this and the rediupdates notes, but this summary is focused on answering any questions the client might have. This also serves as a reminder of any work you require the client to complete before your next work day.
+* Update ticket notes with new information you encounter as you work on a task. This is also useful when someone else has to take over a partly completed work item.
+* Link commits and branches to tickets: VSTS supports linking of branches and commits to a work item. This can add far more context to the changes that the commit messages do.
