@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Useful practices
+title: Useful Practices
 ---
 
 # Tools
@@ -15,6 +15,8 @@ Scratchpad for c#. It is useful for developing one off scripts, or scripting sce
 
 ## Google Chrome
 While choice of browsers is always a topic of debate, Google Chrome has support for user profiles, which simplifies managing different login sessions that would normally conflict (ie. Logging in multiple Microsoft accounts). These sessions can be saved and reactivated when the profile is resumed, so you don't have to re-enter the credentials if the login hasn't expired. 
+
+Chrome also supports debugging of Cordova apps running under Android. This can be accessed at chrome://inspect/. You can also map ports on your dev machine to localhost ports on the android device, which removes the need for messy bindings when hosting in iisexpress.
 
 ## Tenrox
 More of a necessary item than a useful tool, tenrox is a timesheet entry system for tracking hours worked. Time entered here feeds into the Support Contract Management System.
