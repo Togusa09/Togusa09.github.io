@@ -14,27 +14,28 @@ Provides a single place to handle customer communication through. It allows thre
 Scratchpad for c#. It is useful for developing one off scripts, or scripting scenarios to load into environments. Dlls and nuget packages can be imported to interact with existing codebases.
 
 ## Google Chrome
-While choice of browsers is always a topic of debate, Google Chrome has multiprofile support simplifies managing different login sessions that would normally conflict (ie. Logging in multiple Microsoft accounts). These sessions can be saved and reactivated when the profile is resumed, so you don't have to re-enter the credentials if the login hasn't expired. 
+While choice of browsers is always a topic of debate, Google Chrome has support for user profiles, which simplifies managing different login sessions that would normally conflict (ie. Logging in multiple Microsoft accounts). These sessions can be saved and reactivated when the profile is resumed, so you don't have to re-enter the credentials if the login hasn't expired. 
 
 ## Tenrox
-More of a necessary item than a useful tool, tenrox is a timesheeting system for tracking hours worked. Time entered here feeds into the Support Contract Management System.
+More of a necessary item than a useful tool, tenrox is a timesheet entry system for tracking hours worked. Time entered here feeds into the Support Contract Management System.
 
 ## LastPass
 Password manager with integration with multiple browsers. Includes a strong password generator and removes most excuses for using weak or repeated passwords.
 
-# Readify Tools
+## mRemoteNG
+mRemoteNG is a free client for managing remote connections to computers. It supports a variety of protocols, including RDP and VNC. The client allows import/export of connection lists, which allows them to be easily passed to another user. It is also possible to set inherited properties, so that the same username and password can be shared between multiple connections. 4K screens on the client 
+
+# Readify Developed Tools
 
 ## Support Contract Management
-Also known as "Blobfish" for an unknown reason. This is an internal Readify product that allows tracking of the contract time used for each client as the month goes on. Watching this is important if you have a client that has less than 20 hours, or often goes over hours so you can avoid overage. UI Can be configured to only show relevant clients. Automatically imports data from Tenrox to calculate the remaining hours.
-
-Is there a user guide for this anywhere?
+Also known as "Blobfish" for an unknown reason. This is an internal Readify product that allows tracking of the contract time used for each client as the month goes on. Watching this is important if you have a client that has less than 20 hours, or often goes over hours so you can avoid overage. UI Can be configured to only show relevant clients. Hours worked are automatically imported from Tenrox, providing a summary of completed work and calculating the remaining contract hours for the month.
 
 ## RediUpdates
 Readify portal for compiling and distributing weekly summaries. It provides tracking of what was done that week, what will be done next week, any upcoming opportunities and ongoing issues. There is currently no "Save" button on the site, but hitting "next" or "back" will save what you have entered.
 
 # Practices
 
-The following are practices that I've found useful 
+The following are practices that can be useful 
 
 * Keep notes through the day: Having a record of what you did, issues encountered or discussions you had with people is invaluable. When switching clients it can be hard to remember the details of what you did that morning, let alone the previous day.
 * Record Timesheets at end of day, or when switching customer: Timesheets can be a pain and easy to forget, especially when you just want to get home on a Friday. By making it a habit to fill them in every day, it's one less thing to remember, and you don't have to spend time going back through notes to check what you were doing Monday morning.
@@ -44,3 +45,4 @@ The following are practices that I've found useful
 * Send to client a summary of tasks completed at the end of the day: There will be some overlap between this and the rediupdates notes, but this summary is focused on answering any questions the client might have. This also serves as a reminder of any work you require the client to complete before your next work day.
 * Update ticket notes with new information you encounter as you work on a task. This is also useful when someone else has to take over a partly completed work item.
 * Link commits and branches to tickets: VSTS supports linking of branches and commits to a work item. This can add far more context to the changes that the commit messages do.
+* Break down work items into individual tasks. This is supported as a feature in VSTS, and allows you to check the off when completed. This is also useful for tasks that need to be repeated in multiple environments, so you don't lose track of progress.
