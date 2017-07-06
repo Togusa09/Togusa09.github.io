@@ -21,12 +21,13 @@ Document steps for creating new app
 
 After deploying to the iPad, I could run the demo:
 
-Add video
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NWPTpF8klxY" frameborder="0" allowfullscreen></iframe>
 
 The tracking is surprisingly stable given the much fewer sensors compared to the Hololens. The model does jump around a little when there are obstructions or rapid movement.
 
 
 Section showing off hit tracking. Not perfect, but quite good considering.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eiJvvcJokhM" frameborder="0" allowfullscreen></iframe>
 
 Add intermediate section on plane detection
 
@@ -34,3 +35,5 @@ Add intermediate section on plane detection
 Unity section https://unity3d.com/learn/tutorials/topics/mobile-touch/building-your-unity-game-ios-device-testing
 
 Unity build process is similar to the one of the hololens, run a build in unity, which exports to a folder, then open in xcode and run on device.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ntliuPz-tHg" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Sv7ztYfaogI" frameborder="0" allowfullscreen></iframe>
