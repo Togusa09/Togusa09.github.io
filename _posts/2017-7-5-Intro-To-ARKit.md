@@ -27,10 +27,27 @@ After deploying to the iPad, I could run the demo:
 
 The tracking is surprisingly stable given the much fewer sensors compared to the Hololens. The model does jump around a little when there are obstructions or rapid movement.
 
-
-Section showing off hit tracking. Not perfect, but quite good considering.
+{% highlight swift %}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Set the view's delegate
+        sceneView.delegate = self
+        
+        // Show statistics such as fps and timing information
+        sceneView.showsStatistics = true
+        
+        // Create a new scene
+        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        
+        // Set the scene to the view
+        sceneView.scene = scene
+    }
+{% endhighlight %}
 
 ## Demo 2 - Hit detection
+
+AR Kit generates an environment map based on information gathered through its camera. While this environment map does not seem to be directly available like the one supplied by the HoloLens, you can perform a raycast hit test to determine the in world position of corresponding to points on the screen. This demo is an updated version of the previous app, and demonstrates creating an object at a real world position. The user touches the screen, and the app projects the position into the world to determine where it collides with a surface, and creates a cube there.
 
 {% highlight swift %}
 
@@ -49,12 +66,13 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
 
 {% endhighlight %}
 
+The intersection calculation isn't perfect, but once again it is surprisingly good for just a single optical camera. As this is still only a beta, I expect this to improve
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/eiJvvcJokhM" frameborder="0" allowfullscreen></iframe>
  
-
 ## Demo 3 - Plane Detection
 
-Add intermediate section on plane detection
+As with the HoloLens, AR Kit provides a mechanism for detecting flat surfaces, and providing them to the program as a plane. This feature will be useful for many apps, and can provide a flat, bounded environment to work with. Currently AR Kit does not have wall plane detection, so can only detect floors and desks. If wall detection is required, a raycast hit test can be be used. As more of the environment is scanned, AR Kit builds a more complete model and recalculates the plane, performing a callback when it does so. As it is unable to detect walls, it may combine areas, even if they are separated by a physical obstacle, such as walls. The following demo displays and updates the planes as they are updated.
 
 {% highlight swift %}
     var redMaterial : SCNMaterial!
@@ -100,6 +118,8 @@ Add intermediate section on plane detection
         }
     }
 {% endhighlight %}
+
+At the moment AR Kit is not as advanced as the technology we see in the HoloLens, but so far I haven't seen anything take full advantage of that technology, so I believe both are fairly evenly matched for the moment. AR Kit experiences are far less immersive as they are on a hand held device, but the cheapest device it can run on is six times cheaper than a HoloLens, and iPhones are quite common, making for a much lower barrier to entry. I think that AR Kit will really help Mixed Reality applications take off, especially if Apple release an equivalent of the Samsung Gear or Google Dream so that the user can be immersed.
 
 ## Unity Demo
 
