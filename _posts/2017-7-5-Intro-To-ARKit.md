@@ -6,16 +6,16 @@ title: Intro to Apple AR-Kit
 Special thanks to Tod for chasing an iPhone 6 for me, and apologies to him for telling him I needed an iPhone 6 when I needed a 6S.
 
 
-
 Requirements for developing Apple AR-Kit
-* iOS device with an A9 or A10 processor and iOS 11 Beta. This includes the iPhone 6S (emphasis on S), iPhone 7, iPad Pro or iPad (2017).
+* iOS device with an A9 or A10 processor and the iOS 11 Beta. This includes the iPhone 6S (emphasis on S), iPhone 7, iPad Pro or iPad (2017).
 * Mac OS computer running Mac OS version 10.12.4 or above
+* XCode 9 Beta
 
 https://developer.apple.com/documentation/arkit
 
 Include note on signing profile setup just in case
 
-To begin, I wanted to see how easy it was to get started with running a bare minimum sample AR-Kit app. Fortunately the default template includes a bare bones example that contains a pre-populated model to show off the positional tracking capabilities. 
+To begin, I wanted to see how easy it was to get started with running a bare minimum sample AR-Kit app. Fortunately the default template includes a bare bones example that contains a pre-populated model to show off the positional tracking ability. 
 
 Document steps for creating new app
 
@@ -118,6 +118,8 @@ As with the HoloLens, AR Kit provides a mechanism for detecting flat surfaces, a
         }
     }
 {% endhighlight %}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eK8pSn-hedI" frameborder="0" allowfullscreen></iframe>
 
 At the moment AR Kit is not as advanced as the technology we see in the HoloLens, but so far I haven't seen anything take full advantage of that technology, so I believe both are fairly evenly matched for the moment. AR Kit experiences are far less immersive as they are on a hand held device, but the cheapest device it can run on is six times cheaper than a HoloLens, and iPhones are quite common, making for a much lower barrier to entry. I think that AR Kit will really help Mixed Reality applications take off, especially if Apple release an equivalent of the Samsung Gear or Google Dream so that the user can be immersed.
 
