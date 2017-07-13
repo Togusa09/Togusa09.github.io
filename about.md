@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Currently developing software at Readify
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+Interest range through software, VR, AR, electronics and 3D printing.
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[BHockley01@gmail.com](mailto:BHockley01@gmail.com)
