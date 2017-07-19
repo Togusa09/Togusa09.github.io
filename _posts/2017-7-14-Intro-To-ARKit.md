@@ -5,6 +5,7 @@ title: Intro to Apple AR-Kit
 
 Special thanks to Tod for chasing an iPhone 6 for me, and apologies to him for telling him I needed an iPhone 6 when I needed a 6S.
 
+The source code for the demos in the post are available on my [GitHub](https://github.com/Togusa09/ARKitDemos)
 
 Requirements for developing Apple AR-Kit
 * iOS device with an A9 or A10 processor and the iOS 11 Beta. This includes the iPhone 6S (emphasis on S), iPhone 7, iPad Pro or iPad (2017).
