@@ -14,8 +14,6 @@ Requirements for developing Apple AR-Kit
 
 https://developer.apple.com/documentation/arkit
 
-Include note on signing profile setup just in case
-
 To begin, I wanted to see how easy it was to get started with running a bare minimum sample AR-Kit app. Fortunately the default template includes a bare bones example that contains a pre-populated model to show off the positional tracking ability. 
 
 Document steps for creating new app
