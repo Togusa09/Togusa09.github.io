@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Currently developing software at Readify
+Works as a developer for [Readify](http://www.readify.net/) in their Managed Services.
 
 ### More Information
 

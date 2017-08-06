@@ -29,7 +29,8 @@ Moving from Umbraco 4 to 7 not only brings a number of API changes, but also rai
 For any other packages that weren't reinstalled as part of the upgrade, Visual Studio will provide a warning that they are targeting an old version of .net. Once identified, these can be reinstalled with the following command using the nuget console:
 
 ```Update-Package <package_name> -ProjectName <project_name> -reinstall```
-[NuGet Reference](https://docs.microsoft.com/en-us/nuget/consume-packages/reinstalling-and-updating-packages)
+
+[Command Reference](https://docs.microsoft.com/en-us/nuget/consume-packages/reinstalling-and-updating-packages)
 
 ## API Changes
 
