@@ -175,6 +175,24 @@ $acl.AddAccessRule($accessRule2)
 Set-Acl $appDataPath $acl2
 {% endhighlight %}
 
+### Media Folder
+As users can upload content into umbraco, it is recommended to set Umbraco's media directory to a directory that will be persisted between deployments. This can be done by changing the umbracoMediaPath appsetting to point to a folder outside of the deployment directory, or configuring the website to have a virtual directory for the default "~/media" path. [Umbraco App Settings](https://our.umbraco.org/Documentation/Reference/Config/webconfig/)
+
+### Security
+By default umbraco uses an implmentation of the ASP.net identity provider for internal users and external membership, but does not have very practical 
+security options enabled. 
+
+If your site is using SSL (Which it should), require it for logging into umbraco with the appsetting `<add key="umbracoUseSSL" value="true" />`
+
+I recommend setting the following attributes on the UsersMembershipProvider:
+enablePasswordRetrieval="false" 
+enablePasswordReset="true" 
+requiresQuestionAndAnswer="false" 
+passwordFormat="Hashed" 
+allowManuallyChangingPassword="true"
+
+ [Umbraco Security settings](https://our.umbraco.org/Documentation/Reference/Security/)
+
 # Custom content
 
 Extensions can go in App_Plugins to provide separation from standard umbraco content/features
