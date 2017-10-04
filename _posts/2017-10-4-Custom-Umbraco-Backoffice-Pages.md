@@ -1,39 +1,22 @@
 ---
 layout: post
-title: Umbraco Setup and Configuration
+title: Customising the Umbraco Backoffice
 ---
 
-Describe umbraco, summaries what we're going to do
-Custom content goes in App_Plugins folder
-
-Description of how to set up an Umbraco website using TeamCity and Octopus deploy for building and deployment.
-
-Will cover: (Add links)
-- Setup
-    - Installation
-    - Logging & Dependency Injection
-    - AU Hacks
-- Build and deployment config
-    - Folder permissions
-    - Virtual folders for media
-    - Forcing cache refresh on deployment
-- Creating new backoffice Sections
-    - Create menus
-    - Javascript file structure
-    - Templates
-    - Controllers
-        - Types
-        - Code snippets
-    - Downloading from API controller
-    - Uploading with parameters
+This post will go through the setup of custom backoffice pages in Umbraco 7, as well as adding Autofac and Serilog
 
 # Umbraco Project Setup
+
+The process of creating an new umbraco instance is documented in the official docs at https://our.umbraco.org/documentation/getting-started/setup/install/install-umbraco-with-nuget 
+For this post, I am using version 7.5.14.
+
+All the code from this example can be found on my [GitHub](https://github.com/Togusa09/UmbracoBackofficeSample)
 
 ## Logging and Dependency Injection Container Setup
 
 Using Autofac for the IoC setup
 - Autofac
-- Autofac.WebApi - WeApi dependency injection
+- Autofac.WebApi2 - WeApi dependency injection
 - Autofac.Mvc5 - MVC dependency injection
 - Autofac.Web - WebForms dependency injection
 
