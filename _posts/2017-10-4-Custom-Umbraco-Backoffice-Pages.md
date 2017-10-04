@@ -191,16 +191,16 @@ requiresQuestionAndAnswer="false"
 passwordFormat="Hashed" 
 allowManuallyChangingPassword="true"
 
- [Umbraco Security settings](https://our.umbraco.org/Documentation/Reference/Security/)
+[ASP Membership Security settings](https://msdn.microsoft.com/en-us/library/system.web.security.membership(v=vs.110).aspx)
 
-# Custom content
+# Adding Custom content
 
 Extensions can go in App_Plugins to provide separation from standard umbraco content/features
 All plugin.manifest files are loaded, when you're in the backoffice, regardless of what page you're on. Because of this, a 'Shared' plugin is not required, but is neater.
 
 
-
-For new section backoffice menu:
+## Custom backoffice sections
+To create a new menu option in the Umbraco Back office:
 
 Create new application - Provides the new menu ico
 
@@ -237,42 +237,19 @@ public class CommerceManagementTreeController : TreeController
 }
 {% endhighlight %}
 
-Page paths - By default umbraco expects all backoffice pages to be for an entity, so expects an id at the end of the URL. Umbraco is using UI router internally, so this may be customisable. After some trial and error, we determined that the mapping of urls to page html files was as follows:
+Newly added menus will be disabled for users by default. They can be enabled using the user settings menu in umbraco.
 
+Umbraco's menu structure is designed for each entity to exist a node in the tree structure, and to an edit.html for each. This doesn't let itself well to large sets of data such as a list of orders. It's possible to manipulate the route resolution to allow you to use a html file with a specific name instead of the default edit.html. This allows the addition of custom views that don't have to confirm to umbraco's expected structure, which has the upside of allowing quick and easy development for adding simple CRUD pages, but prevents proper integration with Umbraco's features.
+
+Folder structure maps to urls as described below:
 Umbraco#/PluginName/PluginTreeName/PageName/0
 ~/App_Plugins/PluginName/backoffice/PluginTreeName/PageName.html
 
+Umbraco uses angular ui router for its navigation, so it may be possible to define custom routes. As I am avoiding making any changes involving the contents of the `umbraco` and `umbraco_client` folders, I haven't investigated this.
 
-Template for basic layout
+Javascript and css files used in the custom section can be listed in the package.manifest file in the root directory (~\App_Plugins\CustomSection\package.manifest)
 
-## List page template
-
-## Edit page template
-
-Page references the controller, so having a controller is optional
-
-{% highlight html %}
-<div class="custom-editor" ng-controller="Section.CustomController as vm">
-    <form  val-form-manager>
-        <umb-editor-view>
-            <umb-editor-header name="vm.pageName"
-                               hide-alias="true"
-                               hide-description="true"
-                               hide-icon="true"
-                               name-locked="true">
-            </umb-editor-header>
-
-            <umb-editor-container>
-            </umb-editor-container>
-        </umb-editor-view>
-        <umb-editor-footer>
-            <umb-editor-footer-content-right>
-                <button type="button" class="btn btn-success" ng-disabled="!clinicForm.$valid || vm.loading" ng-click="vm.save(clinicForm)" hotkey="ctrl+s">Save</button>
-            </umb-editor-footer-content-right>
-        </umb-editor-footer>
-    </form>
-</div>
-{% endhighlight %}
+## Custom pages
 
 Sample umbraco resource
 {% highlight javascript %}
@@ -302,13 +279,126 @@ angular.module('umbraco.resources').factory('customItemResource',
     });
 {% endhighlight %}
 
-Controller implementation
+
+### List page example
+Example of search page that lists results with a loading indicator and paging. The `umbraco-property` element is an element I created to make managing the layout of fields.
+
+{% highlight html %}
+<div class="umb-panel umb-editor-wrapper" ng-controller="CustomSection.ListCustomItemController as vm">
+    <form name="mySectionForm" novalidate ng-submit="vm.search()">
+        <umb-editor-view>
+            <umb-editor-header name="vm.pageName"
+                               hide-alias="true"
+                               hide-description="true"
+                               hide-icon="true"
+                               name-locked="true">
+            </umb-editor-header>
+
+            <umb-editor-container>
+                <div class="form-horizontal">
+                    <umbraco-property title="Search Criteria">
+                        <input type="text" ng-model="vm.searchCriteria.searchProperty" />
+                    </umbraco-property>
+                    <button type="submit" class="btn">Search</button>
+                    <button type="button" class="btn" ng-click="vm.clear()">Clear</button>
+                    <record-count total-items="vm.totalItems" page-number="vm.page" page-count="vm.pageCount"></record-count>
+
+                    <umb-load-indicator ng-if="vm.loading">
+                    </umb-load-indicator>
+                    <div ng-if="!vm.loading">
+                        <table class="table table-striped" cellspacing="0" cellpadding="5px">
+                            <thead>
+                                <tr>
+                                    <th class="firstCol"><a ng-click="vm.sortBy('id')">Id</a></th>
+                                    <th class="big-col"><a ng-click="vm.sortBy('name')">Name</a></th>
+                                    <th class="small-col">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="searchResult in vm.searchResults">
+                                    <td class="firstCol">{{searchResult.Id}}</td>
+
+                                    <td>{{searchResult.Name}}</td>
+                                    <td><a ng-href="#/CustomSection/CustomSectionTree/EditCustomItem/{{searchResult.Id}}">Edit</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <umb-pagination ng-if="vm.pageCount"
+                                        page-number="vm.currentPage"
+                                        total-pages="vm.pageCount"
+                                        on-go-to-page="vm.goToPage"
+                                        on-next="vm.next"
+                                        on-prev="vm.prev">
+                        </umb-pagination>
+
+                    </div>
+                </div>
+            </umb-editor-container>
+        </umb-editor-view>
+    </form>
+</div>
+
+
+{% endhighlight %}
+
+### Edit page template
+
+Example editing page that displays a save and back button on a menu at the bottom of the screen, matching the layout used by Umbraco on its screens. There is also a loading indicator for display while the the entity is saving and loading.
+
+{% highlight html %}
+<div class="custom-editor" ng-controller="CustomSection.EditCustomItemController as vm">
+    <form name="editForm" val-form-manager novalidate>
+        <umb-editor-view>
+            <umb-editor-header name="vm.pageName"
+                               hide-alias="true"
+                               hide-description="true"
+                               hide-icon="true"
+                               name-locked="true">
+            </umb-editor-header>
+            <umb-editor-container>
+                <div class="form-horizontal">
+                    <umb-load-indicator ng-if="vm.loading">
+                    </umb-load-indicator>
+                    <div ng-if="!vm.loading">
+                        <div class="well">
+                            <p>Sample editing page</p>
+                        </div>
+
+                        <div class="form-horizontal">
+                            <umbraco-property title="Item Id">
+                                {{vm.customItem.Id}}
+                            </umbraco-property>
+                            <umbraco-property title="Name">
+                                <input type="text" ng-model="vm.customItem.Name"/>
+                            </umbraco-property>
+                        </div>
+                    </div>
+                </div>
+            </umb-editor-container>
+            <umb-editor-footer>
+                <umb-editor-footer-content-left>
+                    <a href="#/CustomSection/CustomSectionTree/ListCustomItem/0">Back to search</a>
+                </umb-editor-footer-content-left>
+                <umb-editor-footer-content-right>
+                    <button type="button" class="btn btn-success" ng-disabled="!editForm.$valid || vm.loading" ng-click="vm.save(editForm)" hotkey="ctrl+s">Save</button>
+                </umb-editor-footer-content-right>
+            </umb-editor-footer>
+        </umb-editor-view>
+    </form>
+</div>
+{% endhighlight %}
+
+## Backoffice Api Controllers
+
+Umbraco provides controller implementations that integrate with the Umbraco back office authentication, simplifying the process of securing the backoffice api and pages.
+
+Umbraco backoffice Controllers:
 UmbracoAuthorizedJsonController - Authorised umbraco backoffice api controller that is autorouted to "/umbraco/backoffice/api/{controller}/{action}"
 UmbracoAuthorizedController - Authorised umbraco backoffice mvc controller that is manually routed.
 
 Code snippets:
 
-Doing paging calculations
+Paging service is a small utility class to handle common paging methods
 
 {% highlight c# %}
 public class PagingService : IPagingService
@@ -329,35 +419,33 @@ public class PagingService : IPagingService
 }
 {% endhighlight %}
 
-Returning a content stream as a response to a webapi request
+As we're supporting paging in the search screens, it is helpful to have some base classes that can be used as base classes when there's custom parameters, or by themselves when there's no extra search parameters. This object allows page, sorting parameter, sort order and page size to be set.
 
 {% highlight c# %}
-public class WebApiCsvGenerator : IWebApiCsvGenerator
+public enum SortDirection
 {
-    public HttpResponseMessage GenerateCsvResponse(object[] content, string fileName)
+    ASC,
+    DESC
+}
+
+public class PagedRequest
+{
+    public PagedRequest()
     {
-        DataTable table = Utils.CreateDataTable(content);
-        return GenerateCsvResponse(table, fileName);
+        Page = 1;
+        SortBy = string.Empty;
+        SortDirection = SortDirection.ASC;
+        PageSize = Constants.DefaultPageSize;
     }
 
-    public HttpResponseMessage GenerateCsvResponse(DataTable dataTable, string fileName)
-    {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-
-        Utils.WriteCSVFileToStream(writer, dataTable);
-        stream.Flush();
-        stream.Position = 0;
-
-        var result = new HttpResponseMessage(HttpStatusCode.OK);
-        result.Content = new StreamContent(stream);
-        result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/csv");
-        result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
-        return result;
-    }
+    public int Page { get; set; }
+    public string SortBy { get; set; }
+    public SortDirection SortDirection { get; set; }
+    public int PageSize { get; set; }
 }
 {% endhighlight %}
 
+As with the request, we want a reusable class for returning the paging information, as well as including the list of items for the current page.
 
 {% highlight c# %}
 public class PagedListResponse<T>
@@ -377,6 +465,7 @@ public class PagedListResponse<T>
 }
 {% endhighlight %}
 
+Building the response is will be a common process for everything returning a paged list, so we can put this in a common base clase.
 
 {% highlight c# %}
 public abstract class BackofficeApiController : UmbracoAuthorizedJsonController
@@ -397,4 +486,58 @@ public abstract class BackofficeApiController : UmbracoAuthorizedJsonController
         return new PagedListResponse<T>(list, pageNumber, lastPage, totalItems);
     }
 }
+{% endhighlight %}
+
+And finally we use all that code to create a stub controller and its request class, that will respond to the requests from the frontend.
+{% highlight c# %}
+public class CustomItemRequest : PagedRequest
+    {
+        public string SearchProperty { get; set; }
+    }
+
+    public class CustomItemController : BackofficeApiController
+    {
+        private List<CustomItem> _items = new List<CustomItem>();
+
+
+        public CustomItemController(IPagingService pagingService) : base(pagingService)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                _items.Add(new CustomItem
+                {
+                    Id = i,
+                    Name = $"Item {i}"
+                });
+            }
+        }
+
+        [HttpGet]
+        public PagedListResponse<CustomItem> GetCustomItems([FromUri]CustomItemRequest request)
+        {
+            IEnumerable<CustomItem> results = _items;
+            if (!string.IsNullOrWhiteSpace(request.SearchProperty))
+            {
+                results = results.Where(r => r.Name.Contains(request.SearchProperty));
+            }
+            var totalItemCount = results.Count();
+            var startAt = (request.Page - 1) * request.PageSize;
+
+            var pageResult = results.Skip(startAt).Take(request.PageSize);
+
+            return GetResponse(request, totalItemCount, pageResult);
+        }
+
+        [HttpGet]
+        public CustomItem GetCustomItem(int id)
+        {
+            return _items.FirstOrDefault(i => i.Id == id);
+        }
+
+        [HttpPost]
+        public void UpdateCustomItem(int id, CustomItem model)
+        {
+            // Not actually updating anything
+        }
+    }
 {% endhighlight %}
