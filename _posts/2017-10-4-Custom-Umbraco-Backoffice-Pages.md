@@ -3,11 +3,13 @@ layout: post
 title: Customising the Umbraco Backoffice
 ---
 
-This post will go through the setup of custom backoffice pages in Umbraco 7, as well as adding Autofac and Serilog
+This post will go through the setup of custom backoffice pages in Umbraco 7, as well as adding Autofac and Serilog.
+
+This is a long post, and I was able to get the time needed to write it using Professional Development time provided the company I work for, [Readify](https://www.readify.net). To find out more about the career opportunities and benefits they offer, see [join.readify.net](https://join.readify.net/)
 
 # Umbraco Project Setup
 
-The process of creating an new umbraco instance is documented in the official docs at https://our.umbraco.org/documentation/getting-started/setup/install/install-umbraco-with-nuget 
+The process of creating an new Umbraco instance is explained in the [official documentation](https://our.umbraco.org/documentation/getting-started/setup/install/install-umbraco-with-nuget)
 For this post, I am using version 7.5.14.
 
 All the code from this example can be found on my [GitHub](https://github.com/Togusa09/UmbracoBackofficeSample)
@@ -27,7 +29,8 @@ Using Serilog for the logging
 - Serilog.WebClassic.WebApi - For logging webapi
 - Serilog.Enrichers.Process - Supplies information on the running process
 
-As Umbraco requires its UmbracoApplication class to be instantiated as part of application startup for all of its features to work correctly. UmbracoApplication already implements many of the normally used startup callbacks preventing them from being used, but provides additional callbacks that can be overridden in an inheriting class. 
+By default Umbraco overrides the standard ASP global.asax, replacing the usual Global class with their own implementation of HttpApplication, UmbracoApplication. This class is responsible for initialising a large amount of Umbraco's services, so the site will not work correctly if it executed on startup. This class prevents use `Application_OnStart` and the other HttpApplication event callbacks to hook into ASP events. Fortunately Umbraco application provides alternative callbacks that can be overridden to achieve this.
+
 
 Example implementation of Global.asax, registering Autofac for dependency injection and Serilog for logging
 
@@ -320,8 +323,6 @@ Example of search page that lists results with a loading indicator and paging. T
         </umb-editor-view>
     </form>
 </div>
-
-
 {% endhighlight %}
 
 ### Edit page template
@@ -346,7 +347,6 @@ Example editing page that displays a save and back button on a menu at the botto
                         <div class="well">
                             <p>Sample editing page</p>
                         </div>
-
                         <div class="form-horizontal">
                             <umbraco-property title="Item Id">
                                 {{vm.customItem.Id}}
@@ -474,53 +474,53 @@ public abstract class BackofficeApiController : UmbracoAuthorizedJsonController
 And finally we use all that code to create a stub controller and its request class, that will respond to the requests from the frontend.
 {% highlight c# %}
 public class CustomItemRequest : PagedRequest
+{
+    public string SearchProperty { get; set; }
+}
+
+public class CustomItemController : BackofficeApiController
+{
+    private List<CustomItem> _items = new List<CustomItem>();
+
+
+    public CustomItemController(IPagingService pagingService) : base(pagingService)
     {
-        public string SearchProperty { get; set; }
+        for (int i = 0; i < 100; i++)
+        {
+            _items.Add(new CustomItem
+            {
+                Id = i,
+                Name = $"Item {i}"
+            });
+        }
     }
 
-    public class CustomItemController : BackofficeApiController
+    [HttpGet]
+    public PagedListResponse<CustomItem> GetCustomItems([FromUri]CustomItemRequest request)
     {
-        private List<CustomItem> _items = new List<CustomItem>();
-
-
-        public CustomItemController(IPagingService pagingService) : base(pagingService)
+        IEnumerable<CustomItem> results = _items;
+        if (!string.IsNullOrWhiteSpace(request.SearchProperty))
         {
-            for (int i = 0; i < 100; i++)
-            {
-                _items.Add(new CustomItem
-                {
-                    Id = i,
-                    Name = $"Item {i}"
-                });
-            }
+            results = results.Where(r => r.Name.Contains(request.SearchProperty));
         }
+        var totalItemCount = results.Count();
+        var startAt = (request.Page - 1) * request.PageSize;
 
-        [HttpGet]
-        public PagedListResponse<CustomItem> GetCustomItems([FromUri]CustomItemRequest request)
-        {
-            IEnumerable<CustomItem> results = _items;
-            if (!string.IsNullOrWhiteSpace(request.SearchProperty))
-            {
-                results = results.Where(r => r.Name.Contains(request.SearchProperty));
-            }
-            var totalItemCount = results.Count();
-            var startAt = (request.Page - 1) * request.PageSize;
+        var pageResult = results.Skip(startAt).Take(request.PageSize);
 
-            var pageResult = results.Skip(startAt).Take(request.PageSize);
-
-            return GetResponse(request, totalItemCount, pageResult);
-        }
-
-        [HttpGet]
-        public CustomItem GetCustomItem(int id)
-        {
-            return _items.FirstOrDefault(i => i.Id == id);
-        }
-
-        [HttpPost]
-        public void UpdateCustomItem(int id, CustomItem model)
-        {
-            // Not actually updating anything
-        }
+        return GetResponse(request, totalItemCount, pageResult);
     }
+
+    [HttpGet]
+    public CustomItem GetCustomItem(int id)
+    {
+        return _items.FirstOrDefault(i => i.Id == id);
+    }
+
+    [HttpPost]
+    public void UpdateCustomItem(int id, CustomItem model)
+    {
+        // Not actually updating anything
+    }
+}
 {% endhighlight %}
