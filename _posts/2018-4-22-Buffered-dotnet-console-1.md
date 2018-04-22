@@ -18,7 +18,7 @@ As we can see from the `CreateOutputWriter` method, the default stream writer is
 
 Get hold of the consoles output stream. Console Pal is an abstraction around platform specific console creation. This looks like it's a holdover from mono and isn't public, so may be removed in future.
 
-```c#
+```
 static void Main(string[] args)
 {
     // Get output stream from internal console pal class. A lott of the console methods just call this class.
