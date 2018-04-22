@@ -18,7 +18,7 @@ As we can see from the `CreateOutputWriter` method, the default stream writer is
 
 Get hold of the consoles output stream. Console Pal is an abstraction around platform specific console creation. This looks like it's a holdover from mono and isn't public, so may be removed in future.
 
-```
+{% highlight csharp %}
 static void Main(string[] args)
 {
     // Get output stream from internal console pal class. A lott of the console methods just call this class.
@@ -35,7 +35,8 @@ static void Main(string[] args)
     
     writer.Write("TEST MESSAGE");
     writer.Flush();
-}```
+}
+{% endhighlight %}
 
 This allows writing with a controlled flush, but doesn't yet provide access to any of the more sophisticated features of the console, which this method of just replacing the stream starts falling apart: All the lower level Console functions are done through Interop, so things like changing colour can't be queued into the stream buffer to execute during the flush.
 
