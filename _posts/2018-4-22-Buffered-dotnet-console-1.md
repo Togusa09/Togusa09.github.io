@@ -4,8 +4,6 @@ title: Converting the dotnet console to support double buffering
 categories: dotnet
 ---
 
-# Buffered display output for c# console
-
 Dot net console apps are useful for rapidly creating and testing concepts, and it is even possible to fairly rapidly produce a tetris clone or text based RPG with a rudimentary UI. However the console has flickering issues when you try redrawing sections of the screen too frequently, due to content being drawn straight to the screen. This is a known problem with 2D/3D applications, and is solved through a technique called double buffering, where the image is drawn to a second buffer, then the display is then swapped to displaying this second buffer. My investigation here is to find a robust and easy to use way to provide this kind of buffering to the dot net console.
 
 For this investigation, I'm using dot net core,  as I assumed that there was greater chance of the console working in a more flexible way.
@@ -20,7 +18,7 @@ As we can see from the `CreateOutputWriter` method, the default stream writer is
 
 Get hold of the consoles output stream. Console Pal is an abstraction around platform specific console creation. This looks like it's a holdover from mono and isn't public, so may be removed in future.
 
-```
+```c#
 static void Main(string[] args)
 {
     // Get output stream from internal console pal class. A lott of the console methods just call this class.
