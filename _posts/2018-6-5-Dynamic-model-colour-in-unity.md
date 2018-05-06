@@ -8,7 +8,7 @@ Colour can be used in games to convey useful contextual information about object
 This post will cover creating a simple model to use as the tank, importing it to unity, then adding configuration to the object to allow the runtime colour to be changed.
 
 After creating the new blender model, check that "Meters" is set as the unit.  
-![BlenderUnits]({{ "/assets/UnityMaterialColor/Units.png" | absolute_url }})  
+![BlenderUnits]({{ "/images/UnityMaterialColor/Units.png" | absolute_url }})  
 
 >Quick summary of some useful Blender controls  
 >A - Select All  
@@ -19,38 +19,38 @@ After creating the new blender model, check that "Meters" is set as the unit.
 ## Creating the main tank section (dynamic colour)
 
 - Create UV Sphere
-![BlenderSphere1]({{ "/assets/UnityMaterialColor/Sphere1.png" | absolute_url }})  
+![BlenderSphere1]({{ "/images/UnityMaterialColor/Sphere1.png" | absolute_url }})  
 - Switch to edit mode (tab)
 - Switch to edge select, and select the perimiter edges (alt + right click)  
-![BlenderSphere2]({{ "/assets/UnityMaterialColor/Sphere2.png" | absolute_url }}) 
+![BlenderSphere2]({{ "/images/UnityMaterialColor/Sphere2.png" | absolute_url }}) 
 - Split into seperate hemispheres by pressing space, and choosing "Edge Split"
 - Select the top hemispwhere by clicking on part of it, then pressing "L"
 - Translate the selected hemisphere directly upwards  
-![BlenderSphere3]({{ "/assets/UnityMaterialColor/Sphere3.png" | absolute_url }}) 
+![BlenderSphere3]({{ "/images/UnityMaterialColor/Sphere3.png" | absolute_url }}) 
 - Select the edge loops from both hemispheres using alt + right click on the first edge, then shift + alt + right click on the second
 - Use "Bridge Edge Loops" to fill the gap between the two hemispheres  
-![BlenderSphere4]({{ "/assets/UnityMaterialColor/Sphere4.png" | absolute_url }})  
+![BlenderSphere4]({{ "/images/UnityMaterialColor/Sphere4.png" | absolute_url }})  
 - Select the whole model by pressing "A"
 - Select the texture tab on the top right, then create a new texture by clicking the "+", then "Create"
 - Rename the material "Dynamic". This will be the material getting replaced, so its defined colour will only be seen in the editor.  
-![BlenderSphere5]({{ "/assets/UnityMaterialColor/Sphere5.png" | absolute_url }})  
+![BlenderSphere5]({{ "/images/UnityMaterialColor/Sphere5.png" | absolute_url }})  
 
 ## Creating the outer frame (Fixed colour)
 
 - Create a cylinder, then resize it to be a narrow band that has a diamater slighly larger than the main tank. (Pressing "N" brings up a transform menu that is useful for this)  
-![BlenderFrame1]({{ "/assets/UnityMaterialColor/Frame1.png" | absolute_url }})  
+![BlenderFrame1]({{ "/images/UnityMaterialColor/Frame1.png" | absolute_url }})  
 - Select the whole cylinder (Click one face, then press "L") 
 - Press "Space" and choose "Duplicate". The duplicate will be created in a the same location, so you will have to translate it to the new position.  
-![BlenderFrame2]({{ "/assets/UnityMaterialColor/Frame2.png" | absolute_url }}) 
+![BlenderFrame2]({{ "/images/UnityMaterialColor/Frame2.png" | absolute_url }}) 
 - Add a cube, then resize to make a post that reaches from the top cylinder to the ground  
-![BlenderFrame3]({{ "/assets/UnityMaterialColor/Frame3.png" | absolute_url }})  
+![BlenderFrame3]({{ "/images/UnityMaterialColor/Frame3.png" | absolute_url }})  
 - Duplicate the post three times, and move the around the tank  
-![BlenderFrame4]({{ "/assets/UnityMaterialColor/Frame4.png" | absolute_url }})  
+![BlenderFrame4]({{ "/images/UnityMaterialColor/Frame4.png" | absolute_url }})  
 - Select the frame sections, then create a new Material name "Frame". I suggest setting this material to a grey to make it look like metal.  
-![BlenderFrame5]({{ "/assets/UnityMaterialColor/Frame5.png" | absolute_url }}) 
+![BlenderFrame5]({{ "/images/UnityMaterialColor/Frame5.png" | absolute_url }}) 
 
 Final Model. A copy of the model can be downloaded from [here]({{ "/assets/SampleTank.blend" | absolute_url }})
-![TankFinal]({{ "/assets/UnityMaterialColor/TankFinal.png" | absolute_url }})  
+![TankFinal]({{ "/images/UnityMaterialColor/TankFinal.png" | absolute_url }})  
 
 
 ## Setting dynamic colour in Unity
@@ -102,6 +102,6 @@ public class DynamicTank : MonoBehaviour {
 {% endhighlight %}
 
 In editor
-![Unity1]({{ "/assets/UnityMaterialColor/Unity1.png" | absolute_url }})  
+![Unity1]({{ "/images/UnityMaterialColor/Unity1.png" | absolute_url }})  
 In Play mode
-![Unity2]({{ "/assets/UnityMaterialColor/Unity2.png" | absolute_url }})  
+![Unity2]({{ "/images/UnityMaterialColor/Unity2.png" | absolute_url }})  
