@@ -4,9 +4,11 @@ title: Creating dynamically coloured models in Unity - Part 2
 categories: unity blender C#
 ---
 
-Additional methods for setting object colour
+Som additional methods for setting object colour
 
-The default shader used by Unity includes a parameter _Color that is used to override the rednering colour for an object. Unfortunately it still creates additional texture instances. It should be possible to work around this by using (GPU instancing)[https://docs.unity3d.com/540/Documentation/Manual/GPUInstancing.html] for the rendering. 
+## Setting colour from shader
+
+The default shader used by Unity includes a parameter _Color that is used to override the rednering colour for an object. Unfortunately it still creates additional texture instances. It should be possible to work around this by using [GPU instancing](https://docs.unity3d.com/540/Documentation/Manual/GPUInstancing.html) for the rendering. 
 
 Setting colour by 
 
@@ -30,9 +32,9 @@ public class ShaderColourRenderer : MonoBehaviour
 }
 {% endhighlight %}
 
-(MaterialPropertyBlock)[https://docs.unity3d.com/ScriptReference/MaterialPropertyBlock.html] provides an alternate way of setting the shader properties. This works fine for objects with single textures, as the property is set for the shaders on all materials, it will override the properties of other meterials. This could be resolved by customising the shader so that the property name isn't shared between the material shaders. However, if customising the shader, the colour replacement could be done by doing by substituting a colour value in the objects texture, or by using a second texture that defines the area for the colour replacement. 
+[MaterialPropertyBlock](https://docs.unity3d.com/ScriptReference/MaterialPropertyBlock.html) provides an alternate way of setting the shader properties. This works fine for objects with single textures, as the property is set for the shaders on all materials, it will override the properties of other meterials. This could be resolved by customising the shader so that the property name isn't shared between the material shaders. However, if customising the shader, the colour replacement could be done by doing by substituting a colour value in the objects texture, or by using a second texture that defines the area for the colour replacement. 
 
-MaterialPropertyBlock example:
+## MaterialPropertyBlock example:
 
 {% highlight c# %}
 public class SetMaterialPropertyBlock : MonoBehaviour
@@ -60,12 +62,12 @@ public class SetMaterialPropertyBlock : MonoBehaviour
 }
 {% endhighlight %}
 
-TextureManager class
+## Using a material manager class
 
 Of course, if the only need is to prevent the creation of a new texture for every object and colour change, then the simplest method is to focus on the on preventing the additional textures being created for every colour change and object. Since this is a relatively simple use case, the coloured materials could be maintained through use of a manager class:
 
 {% highlight c# %}
-public static class TextureManager
+public static class MaterialManager
 {
     static Dictionary<Color, Material> Materials = new Dictionary<Color, Material>();
 
