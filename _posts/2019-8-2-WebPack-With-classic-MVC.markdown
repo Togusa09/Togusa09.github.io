@@ -240,8 +240,8 @@ app.controller('homeController', homeContoller);
 {% highlight javascript %}
 <div class="row" ng-app="testApp">
     <div class="col-md-4" ng-controller="homeController as home">
-        <p>{{home.testProperty}}</p>
-        <p>{{home.testMethod()}}</p>
+        {% raw %}<p>{{home.testProperty}}</p>
+        <p>{{home.testMethod()}}</p>{% endraw %}
     </div>
 </div>
 {% endhighlight %}
