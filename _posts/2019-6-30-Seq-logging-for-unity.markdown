@@ -10,6 +10,4 @@ This is just a proof of concept, but the limitations of unity json serialization
 
 To use the script, just add it to a gameobject in the scene. It will automatically subscribe a callback to the unity logging.
 
-{% comment %}
 {% gist c2dbeb103ae47ebde01341b22818afee %}
-{% endcomment %}
